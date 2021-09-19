@@ -28,7 +28,11 @@ dependencies:
   flutter_chips_input: ^1.10.0
   google_fonts: ^2.1.0
   stacked: 
-  stacked_services: 
+  stacked_services:
+  cached_network_image: ^3.1.0
+  connectivity: ^3.0.6
+  dio: ^4.0.0
+  intl: ^0.17.0 
 
 dev_dependencies:
   stacked_generator: null
