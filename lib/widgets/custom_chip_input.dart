@@ -3,7 +3,6 @@ import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:startdmscreen/models/start_dm_models.dart';
 
-
 import 'custom_input_chip.dart';
 
 class CustomChipInput extends StatelessWidget {
@@ -15,7 +14,7 @@ class CustomChipInput extends StatelessWidget {
         super(key: key);
 
   final GlobalKey<ChipsInputState> _chipKey;
-  final List<UserModel> mockResults;
+  final Future<List<UserModel>> mockResults;
   final horizontalSpace = SizedBox(width: 12);
 
   @override
@@ -36,10 +35,12 @@ class CustomChipInput extends StatelessWidget {
             fontSize: 16,
             color: Color(0xFFF999999),
           )),
-      findSuggestions: (String query) {
+      findSuggestions: (String query) async {
+        List<UserModel> result = await mockResults;
         if (query.length != 0) {
           var lowercaseQuery = query.toLowerCase();
-          return mockResults.where((profile) {
+
+          return result.where((profile) {
             return profile.fullName!
                     .toLowerCase()
                     .contains(query.toLowerCase()) ||
@@ -52,7 +53,7 @@ class CustomChipInput extends StatelessWidget {
                 .indexOf(lowercaseQuery)
                 .compareTo(b.fullName!.toLowerCase().indexOf(lowercaseQuery)));
         }
-        return mockResults;
+        return result;
       },
       onChanged: (data) {},
       chipBuilder: (context, state, UserModel profile) {
@@ -62,9 +63,7 @@ class CustomChipInput extends StatelessWidget {
             name: profile.displayName!);
       },
       suggestionBuilder: (context, state, UserModel profile) {
-        return
-        
-         CheckboxListTile(
+        return CheckboxListTile(
             key: ObjectKey(profile),
             value: false,
             onChanged: (bool? value) {
@@ -93,11 +92,15 @@ class CustomChipInput extends StatelessWidget {
                 height: 8,
                 width: 8,
                 decoration: BoxDecoration(
-                    color: profile.isOnline == true ? Color(0xFF007952) : null,
+                    color:
+                        //  profile.isOnline == true ? Color(0xFF007952) :
+                        null,
                     shape: BoxShape.circle,
-                    border: profile.isOnline == true
-                        ? null
-                        : Border.all(color: Color(0xFF424141))),
+                    border:
+                        //  profile.isOnline == true
+                        //     ? null
+                        //     :
+                        Border.all(color: Color(0xFF424141))),
               ),
               horizontalSpace,
               Text(profile.fullName!,
@@ -107,7 +110,6 @@ class CustomChipInput extends StatelessWidget {
                     color: Colors.black,
                   ))
             ]));
-            
       },
     );
   }

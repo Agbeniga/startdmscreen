@@ -16,6 +16,7 @@ class UserModel {
   String? id;
   String? orgId;
   String? files;
+  bool? isOnline;
   String? imageUrl;
   String? fullName;
   String? status;
@@ -31,6 +32,7 @@ class UserModel {
     this.id,
     this.orgId,
     this.files,
+    this.isOnline,
     this.imageUrl,
     this.fullName,
     this.status,
@@ -41,7 +43,7 @@ class UserModel {
     this.phone,
     this.timeZone,
     this.joinedAt,
-    this.isChecked= false,
+    this.isChecked = false,
   });
 
   @override
@@ -62,7 +64,8 @@ class UserModel {
   Map<String, dynamic> toMap() {
     return {
       "_id": id,
-      "orgId": orgId,
+      "org_id": orgId,
+      "presence": isOnline,
       // "files": files.toJson(),
       "image_url": imageUrl,
       "name": fullName,
@@ -80,10 +83,11 @@ class UserModel {
   factory UserModel.fromMap(Map<String, dynamic> json) {
     return UserModel(
       id: json["_id"],
-      orgId: json["orgId"],
+      orgId: json["org_id"],
+      isOnline: json["presence"] == "true",
       // files: Files.fromJson(json["files"]),
       imageUrl: json["image_url"],
-      fullName: json["name"],
+      fullName: json["first_name"] + " " + json["last_name"],
       status: json["status"],
       email: json["email"],
       displayName: json["display_name"],
